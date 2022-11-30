@@ -15,7 +15,6 @@ $email = $_POST['email'];
 $mensaje = $_POST['mensaje'];
 
 if( empty(trim($nombre)) ) $nombre = 'anonimo';
-if( empty(trim($apellido)) ) $apellido = '';
 
 $body = <<<HTML
     <h1>Contacto desde la web</h1>
