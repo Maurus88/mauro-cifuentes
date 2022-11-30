@@ -19,7 +19,7 @@ if( empty(trim($apellido)) ) $apellido = '';
 
 $body = <<<HTML
     <h1>Contacto desde la web</h1>
-    <p>De: $nombre $apellido / $email</p>
+    <p>De: $nombre / $email</p>
     <h2>Mensaje</h2>
     $mensaje
 HTML;
