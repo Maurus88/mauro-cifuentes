@@ -41,3 +41,5 @@ $rta = mail('mauro.cifuentes88@gmail.com', "Mensaje web de: $nombre", $body, $he
 //var_dump($rta);
 
 header("Location: gracias.html" );
+
+?>
