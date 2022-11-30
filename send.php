@@ -29,8 +29,8 @@ HTML;
 
 $headers = "MIME-Version: 1.0 \r\n";
 $headers.= "Content-type: text/html; charset=utf-8 \r\n";
-$headers.= "From: $nombre $apellido <$email> \r\n";
-$headers.= "To: Sitio web <ejemplo@germanrodriguez.com.ar> \r\n";
+$headers.= "From: $nombre <$email> \r\n";
+$headers.= "To: Sitio web <mauro@cifuentes88.com> \r\n";
 // $headers.= "Cc: copia@email.com \r\n";
 // $headers.= "Bcc: copia-oculta@email.com \r\n";
 
@@ -38,7 +38,7 @@ $headers.= "To: Sitio web <ejemplo@germanrodriguez.com.ar> \r\n";
 //REMITENTE (NOMBRE/APELLIDO - EMAIL)
 //ASUNTO 
 //CUERPO 
-$rta = mail('mauro.cifuentes88@gmail.com', "Mensaje web: $asunto", $body, $headers );
+$rta = mail('mauro.cifuentes88@gmail.com', "Mensaje web de: $nombre", $body, $headers );
 //var_dump($rta);
 
 header("Location: gracias.html" );
