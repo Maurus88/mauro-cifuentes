@@ -24,15 +24,12 @@ $validar = json_decode($result);
 /*  FIN DE CAPTCHA   */
 
 if ($validar->success) {
-$email = trim($_POST['email']);
-$nombre = trim($_POST['name']);
-$comentario = trim($_POST['message']);
+$nombre = $_POST['name'];
+$email = $_POST['email'];
+$mensaje = $_POST['message'];
 
-$consulta = "E-mail: " . $email . " Nombre: " . $name . "Comentario: " . $message;
+$rta = mail('mauro.cifuentes88@gmail.com', "Mensaje desde la web de: $nombre", $mensaje);
+var_dump($rta);
 
-mail("mauro.cifuentes88@gmail.com", "Contacto desde Formulario", $consulta);
-} else {
-echo "Captcha invalido";
-}
-}
-?>
+?
+>
