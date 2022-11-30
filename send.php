@@ -1,34 +1,44 @@
 <?php
-
-if ($_POST['g-recaptcha-response'] == '') {
-echo "Captcha invalido";
-} else {
-$obj = new stdClass();
-$obj->secret = "6LfO1kcjAAAAADO0Koptb10ccp8ogAmwcU-Ozrnh";
-$obj->response = $_POST['g-recaptcha-response'];
-$obj->remoteip = $_SERVER['REMOTE_ADDR'];
-$url = 'https://www.google.com/recaptcha/api/siteverify';
-
-$options = array(
-'http' => array(
-'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-'method' => 'POST',
-'content' => http_build_query($obj)
-)
-);
-$context = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-
-$validar = json_decode($result);
-
-/*  FIN DE CAPTCHA   */
-
-if ($validar->success) {
-$nombre = $_POST['name'];
-$email = $_POST['email'];
-$mensaje = $_POST['message'];
-
-$rta = mail('mauro.cifuentes88@gmail.com', "Mensaje desde la web de: $nombre", $mensaje);
-var_dump($rta);
+if($_SERVER['REQUEST_METHOD'] != 'POST' ){
+    header("Location: index.html" );
 }
-?>
+
+/*
+if( ! isset( $_POST['nombre'] ) ){
+    header("Location: index.html" );
+}
+*/
+
+
+$nombre = $_POST['nombre'];
+$email = $_POST['email'];
+$mensaje = $_POST['mensaje'];
+
+if( empty(trim($nombre)) ) $nombre = 'anonimo';
+if( empty(trim($apellido)) ) $apellido = '';
+
+$body = <<<HTML
+    <h1>Contacto desde la web</h1>
+    <p>De: $nombre $apellido / $email</p>
+    <h2>Mensaje</h2>
+    $mensaje
+HTML;
+
+//sintaxis de los emails email@algo.com || 
+// nombre <email@algo.com>
+
+$headers = "MIME-Version: 1.0 \r\n";
+$headers.= "Content-type: text/html; charset=utf-8 \r\n";
+$headers.= "From: $nombre $apellido <$email> \r\n";
+$headers.= "To: Sitio web <ejemplo@germanrodriguez.com.ar> \r\n";
+// $headers.= "Cc: copia@email.com \r\n";
+// $headers.= "Bcc: copia-oculta@email.com \r\n";
+
+
+//REMITENTE (NOMBRE/APELLIDO - EMAIL)
+//ASUNTO 
+//CUERPO 
+$rta = mail('mauro.cifuentes88@gmail.com', "Mensaje web: $asunto", $body, $headers );
+//var_dump($rta);
+
+header("Location: gracias.html" );
