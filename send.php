@@ -29,7 +29,7 @@ HTML;
 $headers = "MIME-Version: 1.0 \r\n";
 $headers.= "Content-type: text/html; charset=utf-8 \r\n";
 $headers.= "From: $nombre <$email> \r\n";
-$headers.= "To: Sitio web <mauro@cifuentes88.com> \r\n";
+$headers.= "To: Sitio web <mauro.cifuentes88@gmail.com> \r\n";
 // $headers.= "Cc: copia@email.com \r\n";
 // $headers.= "Bcc: copia-oculta@email.com \r\n";
 
