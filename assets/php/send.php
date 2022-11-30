@@ -4,7 +4,7 @@ if ($_POST['g-recaptcha-response'] == '') {
 echo "Captcha invalido";
 } else {
 $obj = new stdClass();
-$obj->secret = "6LcpGkcjAAAAADwNnG_6BepG-WeBmfaYilJxh-i-";
+$obj->secret = "6LfO1kcjAAAAADO0Koptb10ccp8ogAmwcU-Ozrnh";
 $obj->response = $_POST['g-recaptcha-response'];
 $obj->remoteip = $_SERVER['REMOTE_ADDR'];
 $url = 'https://www.google.com/recaptcha/api/siteverify';
