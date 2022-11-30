@@ -30,6 +30,5 @@ $mensaje = $_POST['message'];
 
 $rta = mail('mauro.cifuentes88@gmail.com', "Mensaje desde la web de: $nombre", $mensaje);
 var_dump($rta);
-
-?
->
+}
+?>
