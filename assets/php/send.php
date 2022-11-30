@@ -1,23 +1,38 @@
 <?php
-error_reporting(0);
-$nombre = S_POST['name'];
-$correo_electronico = $_POST['email'];
-$mensaje = $_POST['message'];
-$header = 'From:' .$email.;
-$header .= "X-Mailer:PHP/" . phpversion() . " \r\n";
-$header .= "Mime-Version: 1.0 \r\n";
-$header .= "Content-Type: text/plain";
 
-$mensaje = "Este mensaje fue enviado por:" .$name. "\r\n";
-$mensaje .= "Correo electronico:" .$email. "\r\n";
-$mensaje .= "Mensaje:" .$_POST['message]´. "\r\n";
-$mensaje .= "Enviado el:" .date('d/m/Y', time());
+if ($_POST['g-recaptcha-response'] == '') {
+echo "Captcha invalido";
+} else {
+$obj = new stdClass();
+$obj->secret = "6LcpGkcjAAAAADwNnG_6BepG-WeBmfaYilJxh-i-";
+$obj->response = $_POST['g-recaptcha-response'];
+$obj->remoteip = $_SERVER['REMOTE_ADDR'];
+$url = 'https://www.google.com/recaptcha/api/siteverify';
 
-$para = mauro.cifuentes88@gmail.com;
-$asunto = "Formulario de pagina web de Mauro Cifuentes";
+$options = array(
+'http' => array(
+'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+'method' => 'POST',
+'content' => http_build_query($obj)
+)
+);
+$context = stream_context_create($options);
+$result = file_get_contents($url, false, $context);
 
-mail($para, $asunto, utf8_decode($mensaje), $header);
+$validar = json_decode($result);
 
-echo 'Mensaje enviado correctamente, pronto lo/a estaré contactando';
+/*  FIN DE CAPTCHA   */
 
+if ($validar->success) {
+$email = trim($_POST['email']);
+$nombre = trim($_POST['name']);
+$comentario = trim($_POST['message']);
+
+$consulta = "E-mail: " . $email . " Nombre: " . $name . "Comentario: " . $message;
+
+mail("mauro.cifuentes88@gmail.com", "Contacto desde Formulario", $consulta);
+} else {
+echo "Captcha invalido";
+}
+}
 ?>
