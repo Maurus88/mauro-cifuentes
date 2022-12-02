@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script language="JavaScript" src="assets/js/gen_validatorv31.js" type="text/javascript"></script>
 	</head>
 	<body class="is-preload">
 
@@ -153,7 +154,7 @@
 							<p>Si se encuentra interesado en comunicarse conmigo por favor utilizar esta sección o bien puede enviarme un correo electronico y/o contactarme por medio de mi número de telefono (WhatsApp o llamados).</p>
 							<div class="split style1">
 								<section>
-									<form action="send.php" method="post">
+									<form action="send.php" method="post" name="form_contacto">
 										<div class="fields">
 											<div class="field half">
 												<label for="nombre">Nombre y apellido</label>
@@ -170,6 +171,16 @@
 										</div>
 										<ul class="actions">
 											<li><a href="" class="button submit">Enviar mensaje.</a></li></ul>
+											<script language="JavaScript">
+												var frmvalidator  = new Validator("form_contacto");
+												frmvalidator.addValidation("name","req","Please provide your name"); 
+												frmvalidator.addValidation("email","req","Please provide your email"); 
+												frmvalidator.addValidation("email","email","Please enter a valid email address"); 
+												</script>
+												<p>
+												<a href='http://www.html-form-guide.com/email-form/php-form-to-email.html'
+												>PHP form to email article page</a>
+												</p>
 									</form>
 								</section>
 								<section>

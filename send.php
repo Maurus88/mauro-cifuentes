@@ -1,45 +1,61 @@
 <?php
-if($_SERVER['REQUEST_METHOD'] != 'POST' ){
-    header("Location: index.html" );
+if(!isset($_POST['submit']))
+{
+	//This page should not be accessed directly. Need to submit the form.
+	echo "error; you need to submit the form!";
+}
+$name = $_POST['nombre'];
+$visitor_email = $_POST['email'];
+$message = $_POST['mensaje'];
+
+//Validate first
+if(empty($nombre)||empty($visitor_email)) 
+{
+    echo "Es necesario ingresar un nombre para identificarse y una dirección de correo electronico.";
+    exit;
 }
 
-/*
-if( ! isset( $_POST['nombre'] ) ){
-    header("Location: index.html" );
+if(IsInjected($visitor_email))
+{
+    echo "Dirección de correo invalida";
+    exit;
 }
-*/
+
+$email_from = 'mauro.cifuentes88@gmail.com';//<== update the email address
+$email_subject = "Nuevo formulario completado en pagina web";
+$email_body = "Ha recibido un nuevo mensaje del visitante: $nombre.\n".
+    "Mensaje:\n $mensaje".
+    
+$to = "mauro.cifuentes88@gmail.com";//<== update the email address
+$headers = "From: $email \r\n";
+$headers .= "Reply-To: $visitor_email \r\n";
+//Send the email!
+mail($to,$email_subject,$email_body,$headers);
+//done. redirect to thank-you page.
+header('Location: gracias.html');
 
 
-$nombre = $_POST['nombre'];
-$email = $_POST['email'];
-$mensaje = $_POST['mensaje'];
-
-if( empty(trim($nombre)) ) $nombre = 'anonimo';
-
-$body = <<<HTML
-    <h1>Contacto desde la web</h1>
-    <p>De: $nombre / $email</p>
-    <h2>Mensaje</h2>
-    $mensaje
-HTML;
-
-//sintaxis de los emails email@algo.com || 
-// nombre <email@algo.com>
-
-$headers = "MIME-Version: 1.0 \r\n";
-$headers.= "Content-type: text/html; charset=utf-8 \r\n";
-$headers.= "From: $nombre <$email> \r\n";
-$headers.= "To: Sitio web <mauro.cifuentes88@gmail.com> \r\n";
-// $headers.= "Cc: copia@email.com \r\n";
-// $headers.= "Bcc: copia-oculta@email.com \r\n";
-
-
-//REMITENTE (NOMBRE/APELLIDO - EMAIL)
-//ASUNTO 
-//CUERPO 
-$rta = mail('mauro.cifuentes88@gmail.com', "Mensaje web de: $nombre", $body, $headers );
-//var_dump($rta);
-
-header("Location: gracias.html" );
-
-?>
+// Function to validate against any email injection attempts
+function IsInjected($str)
+{
+  $injections = array('(\n+)',
+              '(\r+)',
+              '(\t+)',
+              '(%0A+)',
+              '(%0D+)',
+              '(%08+)',
+              '(%09+)'
+              );
+  $inject = join('|', $injections);
+  $inject = "/$inject/i";
+  if(preg_match($inject,$str))
+    {
+    return true;
+  }
+  else
+    {
+    return false;
+  }
+}
+   
+?> 
