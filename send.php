@@ -9,7 +9,7 @@ $visitor_email = $_POST['email'];
 $message = $_POST['mensaje'];
 
 //Validate first
-if(empty($nombre)||empty($visitor_email)) 
+if(empty($name)||empty($visitor_email)) 
 {
     echo "Es necesario ingresar un nombre para identificarse y una dirección de correo electronico.";
     exit;
@@ -23,11 +23,11 @@ if(IsInjected($visitor_email))
 
 $email_from = 'mauro.cifuentes88@gmail.com';//<== update the email address
 $email_subject = "Nuevo formulario completado en pagina web";
-$email_body = "Ha recibido un nuevo mensaje del visitante: $nombre.\n".
-    "Mensaje:\n $mensaje".
+$email_body = "Ha recibido un nuevo mensaje del visitante: $name.\n".
+    "Mensaje:\n $message".
     
 $to = "mauro.cifuentes88@gmail.com";//<== update the email address
-$headers = "From: $email \r\n";
+$headers = "From: $visitor_email \r\n";
 $headers .= "Reply-To: $visitor_email \r\n";
 //Send the email!
 mail($to,$email_subject,$email_body,$headers);
